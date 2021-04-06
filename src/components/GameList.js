@@ -4,7 +4,7 @@ import GameCard from "./GameCard";
 
 export default function GameList({list}) {
   return (
-    <div>
+    <div className="game-list">
 
       {list.map((game) => (
         <div key={game.gameID}>

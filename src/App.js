@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import GameList from "./components/GameList";
+import "./App.css";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, {
@@ -29,7 +30,7 @@ function App() {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result /*console.log(result)*/) =>
+      .then((result) =>
         dispatch({
           type: "searchByGameName",
           payload: { gameArray: result },
@@ -40,11 +41,11 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="container">
         <div>
           {gameList.length > 0 ? <GameList list={gameList} /> : "Loading"}
         </div>
-      </header>
+      </div>
     </div>
   );
 }
