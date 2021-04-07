@@ -1,3 +1,4 @@
+
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
@@ -60,8 +61,8 @@ export default function GameList({searchInput}) {
       </div>
     );
         }
-}
 
+}
 
 //https://www.cheapshark.com/api/1.0/games?title=batman
 
