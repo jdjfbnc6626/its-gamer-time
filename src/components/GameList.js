@@ -7,10 +7,13 @@ export default function GameList({list}) {
     <div className="game-list">
 
       {list.map((game) => (
+
         <div key={game.gameID}>
             <GameCard game={game} />
         </div>
+        
       ))}
+
     </div>
   );
 }

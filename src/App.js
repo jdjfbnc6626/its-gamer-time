@@ -1,11 +1,16 @@
 import React, { useEffect, useReducer } from "react";
 import GameList from "./components/GameList";
+import NavBar from "./components/NavBar"
 import "./App.css";
+
+
 
 function App() {
   const [state, dispatch] = useReducer(reducer, {
     gameList: [],
   });
+
+  var searchInput = 'batman'
 
   const { gameList } = state;
 
@@ -26,7 +31,7 @@ function App() {
     };
 
     fetch(
-      "https://www.cheapshark.com/api/1.0/games?title=batman&limit=20&exact=0",
+      `https://www.cheapshark.com/api/1.0/games?title=${searchInput}&limit=20&exact=0`,
       requestOptions
     )
       .then((response) => response.json())
@@ -42,6 +47,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
+        <div><NavBar /></div>
         <div>
           {gameList.length > 0 ? <GameList list={gameList} /> : "Loading"}
         </div>

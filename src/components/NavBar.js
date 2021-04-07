@@ -1,16 +1,17 @@
 import React from 'react'
 
-export default function NavBar() {
+function NavBar() {
   return (
-    <div>
+    <div className='nav-bar'>
       <section>
-        Link Stuff
+        
+        <img src='https://i.imgur.com/BvJrGqC.png' alt='logo' />
       </section>
-      <section>
-        Site Title
+      <section style={{fontSize: "40px", color:"black"}}>
+        <strong>It's Gamer Time</strong>
       </section>
-      <section>
-        Search Stuff
+      <section style={{color:"white"}}>
+        Search bar Stuff
       </section>
     </div>
   )
