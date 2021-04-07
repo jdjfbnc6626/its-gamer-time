@@ -21,7 +21,7 @@ export default function App() {
           <div><NavBar /></div>
           <div>
           <Switch>
-            <Route className="main-search" exact path="/" render={()=> <SearchBar />}/>
+            {/* <Route className="main-search" exact path="/" render={()=> <SearchBar />}/> */}
             <Route path ="/search/:game" component={GameList} />
             <Route path="/games/:id" component={DetailPage} />
             <Redirect exact from="/games" to="/" />

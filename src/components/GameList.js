@@ -1,17 +1,18 @@
-
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
 
 export default function GameList({match}) {
-
-  const searchInput = match.params.game
+  console.log(match)
+  const searchName = match.params.game
 
   const [state, dispatch] = useReducer(reducer, {
     gameList: [],
   });
 
-  const {gameList} = state
+  let {gameList} = state
+  let searchUpperPrice = 100
+  let searchLowerPrice = 0
 
   function reducer(state, action) {
     const { type, payload } = action;
@@ -24,13 +25,18 @@ export default function GameList({match}) {
   }
 
   useEffect(() => {
+    dispatch({
+      type: "searchByGameName",
+      payload: { gameArray: [] },
+    })
+
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
 
     fetch(
-      `https://www.cheapshark.com/api/1.0/games?title=${searchInput}&limit=20&exact=0`, //limit of 20 results is hard coded here
+      `https://www.cheapshark.com/api/1.0/deals?title=${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -41,7 +47,7 @@ export default function GameList({match}) {
         })
       )
       .catch((error) => console.log("error", error));
-  }, [searchInput]); //loading the fetch once might become an issue as new searches are made? could be avoided by calling a new list each time?
+  }, [searchName]); //loading the fetch once might become an issue as new searches are made? could be avoided by calling a new list each time?
 
   //conditional render if the gameList has not been updated by the fetch request
   return (gameList.length > 0 ? (

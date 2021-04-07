@@ -2,7 +2,7 @@ import React from "react";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
-import {Link, BrowserRouter as Route, Redirect, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 
 export default function SearchBar() {
@@ -14,10 +14,9 @@ export default function SearchBar() {
     // console.log(e.target.value);
     e.target.value.length === 0 ? history.push(`/search/NoResultsFound`) :
     history.push(`/search/${e.target.value}`);
-
   }
 
-  return (
+    return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
         <SearchIcon />
@@ -32,7 +31,6 @@ export default function SearchBar() {
         onKeyPress={(event) => {
           if (event.key === "Enter") {
             handleSubmit(event);
-            
           }
         }}
       />
@@ -51,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
+      marginLeft: theme.spacing(0),
       width: "auto",
     },
   },
