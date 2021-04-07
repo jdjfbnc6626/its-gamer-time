@@ -1,23 +1,21 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
 
-export default function GameList({list}) {
-  return (
+//{gameList.length > 0 ? <GameList list={gameList} /> : "Loading"}
+export default function GameList({ list }) {
+  return list.length > 0 ? (
     <div className="game-list">
-
       {list.map((game) => (
-
         <div key={game.gameID}>
-            <GameCard game={game} />
+          <GameCard game={game} />
         </div>
-        
       ))}
-
     </div>
+  ) : (
+    <div>"Loading"</div>
   );
 }
-
 
 //https://www.cheapshark.com/api/1.0/games?title=batman
 

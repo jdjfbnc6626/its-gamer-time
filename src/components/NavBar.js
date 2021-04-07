@@ -1,4 +1,5 @@
 import React from 'react'
+import SearchBar from "./SearchBar"
 
 function NavBar() {
   return (
@@ -10,8 +11,8 @@ function NavBar() {
       <section style={{fontSize: "40px", color:"black"}}>
         <strong>It's Gamer Time</strong>
       </section>
-      <section style={{color:"white"}}>
-        Search bar Stuff
+      <section >
+        <SearchBar/>
       </section>
     </div>
   )
