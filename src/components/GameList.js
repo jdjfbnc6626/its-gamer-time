@@ -50,7 +50,9 @@ export default function GameList({searchInput}) {
         {state.gameList.map((game) => {
           return (
             <div key={game.gameID}>
+              <Link to={`/games/${game.gameID}`}>
                 <GameCard game={game} />
+              </Link>
             </div>
           )}
         )}
