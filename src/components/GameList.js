@@ -1,20 +1,67 @@
-import React from "react";
+
+import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
 
-//{gameList.length > 0 ? <GameList list={gameList} /> : "Loading"}
-export default function GameList({ list }) {
-  return list.length > 0 ? (
-    <div className="game-list">
-      {list.map((game) => (
-        <div key={game.gameID}>
-          <GameCard game={game} />
-        </div>
-      ))}
-    </div>
-  ) : (
-    <div>"Loading"</div>
-  );
+export default function GameList({searchInput}) {
+
+
+  const [state, dispatch] = useReducer(reducer, {
+    gameList: [],
+  });
+
+  function reducer(state, action) {
+    const { type, payload } = action;
+    switch (type) {
+      case "searchByGameName":
+        return { ...state, gameList: payload.gameArray };
+      default:
+        return state;
+    }
+  }
+
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://www.cheapshark.com/api/1.0/games?title=${searchInput}&limit=20&exact=0`, //limit of 20 results is hard coded here
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) =>
+        dispatch({
+          type: "searchByGameName",
+          payload: { gameArray: result },
+        })
+      )
+      .catch((error) => console.log("error", error));
+  }, []); //loading the fetch once might become an issue as new searches are made? could be avoided by calling a new list each time?
+
+  //conditional render if the gameList has not been updated by the fetch request
+  if(state.gameList.length === 0){
+    return <div className="game-list">Loading</div>
+  }else{
+    return (
+
+      <div className="game-list">
+
+        {state.gameList.map((game) => {
+          return (
+            <div key={game.gameID}>
+              <Link to={`/games/${game.gameID}`}>
+                <GameCard game={game} />
+              </Link>
+            </div>
+          )}
+        )}
+
+      </div>
+    );
+        }
+
 }
 
 //https://www.cheapshark.com/api/1.0/games?title=batman

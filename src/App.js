@@ -2,37 +2,33 @@ import React, { useEffect, useReducer } from "react";
 import GameList from "./components/GameList";
 import NavBar from "./components/NavBar";
 import "./App.css";
+import { BrandingWatermark } from "@material-ui/icons";
+import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
+import DetailPage from './components/DetailPage';
 
-export default function App() {
-  const [state, dispatch] = useReducer(reducer, {
-    gameList: [],
-  });
 
-  const { gameList } = state;
 
-  function reducer(state, action) {
-    const { type, payload } = action;
-    switch (type) {
-      case "searchByGameName":
-        return { ...state, gameList: payload.gameArray };
-      default:
-        return state;
-    }
-  }
+
+function App() {
+  
 
   return (
-    <DispatchContext.Provider value={dispatch}>
+    <Router>
       <div className="App">
         <div className="container">
+          <div><NavBar /></div>
           <div>
-            <NavBar />
-          </div>
-          <div>
-            <GameList list={gameList} />
+          <Switch>
+            {/* <Route exact path="/" render={()=> <SearchBar props={state} />}/> */}
+            <Route exact path="/" render={()=> <GameList searchInput={'batman'} />}/> {/* searchInput is hard coded for testing. Gamelist Should be passed a text search from the search Bar*/}
+            <Route path="/games/:id" component={DetailPage} />
+            <Redirect exact from="/games" to="/" />
+          </Switch>
           </div>
         </div>
       </div>
-    </DispatchContext.Provider>
+    </Router>
+
   );
 }
 
