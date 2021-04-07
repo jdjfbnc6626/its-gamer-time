@@ -2,33 +2,19 @@ import React from "react";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
-import { DispatchContext } from "../App";
+import {Link, BrowserRouter as Route, Redirect, useHistory} from "react-router-dom";
 
 
 export default function SearchBar() {
   const classes = useStyles();
-  const dispatch = React.useContext(DispatchContext);
+  const history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target.value);
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
+    // console.log(e.target.value);
+    e.target.value.length === 0 ? history.push(`/search/NoResultsFound`) :
+    history.push(`/search/${e.target.value}`);
 
-    fetch(
-      `https://www.cheapshark.com/api/1.0/games?title=${e.target.value}&limit=20&exact=0`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) =>
-        dispatch({
-          type: "searchByGameName",
-          payload: { gameArray: result },
-        })
-      )
-      .catch((error) => console.log("error", error));
   }
 
   return (
@@ -45,7 +31,8 @@ export default function SearchBar() {
         inputProps={{ "aria-label": "search" }}
         onKeyPress={(event) => {
           if (event.key === "Enter") {
-            return handleSubmit(event);
+            handleSubmit(event);
+            
           }
         }}
       />
