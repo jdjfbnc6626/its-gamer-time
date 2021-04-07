@@ -2,54 +2,19 @@ import React, { useEffect, useReducer } from "react";
 import GameList from "./components/GameList";
 import NavBar from "./components/NavBar"
 import "./App.css";
+import { BrandingWatermark } from "@material-ui/icons";
 
 
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, {
-    gameList: [],
-  });
-
-  var searchInput = 'batman'
-
-  const { gameList } = state;
-
-  function reducer(state, action) {
-    const { type, payload } = action;
-    switch (type) {
-      case "searchByGameName":
-        return { ...state, gameList: payload.gameArray };
-      default:
-        return state;
-    }
-  }
-
-  useEffect(() => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-
-    fetch(
-      `https://www.cheapshark.com/api/1.0/games?title=${searchInput}&limit=20&exact=0`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) =>
-        dispatch({
-          type: "searchByGameName",
-          payload: { gameArray: result },
-        })
-      )
-      .catch((error) => console.log("error", error));
-  }, []);
+  
 
   return (
     <div className="App">
       <div className="container">
         <div><NavBar /></div>
         <div>
-          {gameList.length > 0 ? <GameList list={gameList} /> : "Loading"}
+          <GameList searchInput={'batman'}/> {/* searchInput is hard coded for testing. Gamelist Should be passed a text search from the search Bar*/}
         </div>
       </div>
     </div>
