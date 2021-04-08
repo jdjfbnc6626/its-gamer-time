@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-
+import styles from "../styles/GameCard.modules.css"
 
 //OnClick event will render DetailPage
 //Pass in gameID

@@ -2,6 +2,7 @@
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
+import styles from "../styles/GameList.modules.css"
 
 export default function GameList({match}) {
 
