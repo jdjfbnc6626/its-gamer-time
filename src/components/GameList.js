@@ -51,24 +51,22 @@ export default function GameList({ match }) {
 
   function getLowestPrice(arr) {
     let filteredArray = [];
-    for (let i = 0; i < arr.length; i++) {
-      let lowestPrice = 0;
-      if (!filteredArray.includes(arr[i].internalName)) {
-        for (let j = 0; j < arr.length; j++) {
-          if (arr[i].internalName === arr[j].internalName) {
-            arr[i].salePrice < arr[j].salePrice
-              ? (lowestPrice = arr[i].salePrice)
-              : (lowestPrice = arr[j].salePrice);
+    arr.forEach((game) => {
+      let currentGame = game.internalName;
+      let lowerPrice = game.salePrice;
+      if (!filteredArray.includes(game.internalName)) {
+        arr.forEach((nextGame) => {
+          if (currentGame === nextGame.internalName) {
+            if (Number(nextGame.salePrice) < Number(lowerPrice)) {
+              lowerPrice = nextGame.salePrice;
+              console.log(currentGame, lowerPrice);
+            }
           }
-        }
-        filteredArray.push(arr[i].internalName);
-        filteredArray.push({
-          title: arr[i].title,
-          salePrice: lowestPrice,
-          thumb: arr[i].thumb,
         });
+        game.salePrice = lowerPrice;
+        filteredArray.push(game.internalName, game);
       }
-    }
+    });
     return filteredArray.filter((game) => typeof game === "object");
   }
 
