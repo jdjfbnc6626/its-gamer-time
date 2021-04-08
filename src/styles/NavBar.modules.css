@@ -1,94 +1,67 @@
 .nav-bar {
-    display: grid;
-    grid-template-columns: 0.7fr 1.6fr 0.7fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    height: inherit;
-    align-items:center;
-    grid-template-areas:
-      "logo site-title nav-search";
-    background: linear-gradient(45deg, yellow, blue);
-  }
-  .nav-bar-logo { 
-    grid-area: logo; 
-    object-fit:cover;
-    width: 200px; 
-    height: 5em; /* set to the height of the nav bar */
-  }
+  grid-row-start: 1;
+  grid-column-start: 1;
+  position: fixed;
+  background: linear-gradient(45deg, yellow, blue);
+  width: 100%;
+  height: 12%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.nav-bar-logo {
+  grid-area: logo;
+  object-fit: cover;
+  width: 200px;
+  height: 5em; /* set to the height of the nav bar */
+}
 
-  .nav-bar-title {
-    grid-area: site-title;
-    position: relative;
-    font-size: 50px;
-    letter-spacing: 5px;
-    font-weight: bold;
-    text-align: center;
-    height:inherit;
-    animation: color-change 10s infinite;
-  
-    text-shadow: 0px 0px 1px rgb(167, 167, 167), 0px 1px 1px rgb(167, 167, 167),
-      0px 2px 1px rgb(167, 167, 167), 1px 1px 1px rgb(167, 167, 167),
-      1px 2px 1px rgb(167, 167, 167), 1px 3px 1px rgb(167, 167, 167),
-      2px 2px 1px rgb(167, 167, 167), 2px 3px 1px rgb(167, 167, 167),
-      2px 4px 1px rgb(167, 167, 167), 1px 10px 30px rgba(0, 0, 0, 0.8),
-      1px 10px 70px rgba(0, 0, 0, 0.8), 0px 5px 5px rgba(0, 0, 0, 0.8),
-      -5px 5px 20px rgba(0, 0, 0, 0.8), 5px 5px 20px rgba(0, 0, 0, 0.8),
-      1px 1px 120px rgba(255, 255, 255, 0.5);
+.nav-bar-title {
+  position: relative;
+  font-size: 60px;
+  letter-spacing: 5px;
+  font-weight: bold;
+  animation: color-change 10s infinite;
+
+  text-shadow: 0px 0px 1px rgb(167, 167, 167), 0px 1px 1px rgb(167, 167, 167),
+    0px 2px 1px rgb(167, 167, 167), 1px 1px 1px rgb(167, 167, 167),
+    1px 2px 1px rgb(167, 167, 167), 1px 3px 1px rgb(167, 167, 167),
+    2px 2px 1px rgb(167, 167, 167), 2px 3px 1px rgb(167, 167, 167),
+    2px 4px 1px rgb(167, 167, 167), 1px 10px 30px rgba(0, 0, 0, 0.8),
+    1px 10px 70px rgba(0, 0, 0, 0.8), 0px 5px 5px rgba(0, 0, 0, 0.8),
+    -5px 5px 20px rgba(0, 0, 0, 0.8), 5px 5px 20px rgba(0, 0, 0, 0.8),
+    1px 1px 120px rgba(255, 255, 255, 0.5);
+}
+
+
+@keyframes color-change {
+  0% {
+    color: cyan;
   }
-  .nav-bar-title::after {
-    grid-area: site-title;
-    font-size: 50px;
-    letter-spacing: 5px;
-    height:inherit;
-    top: 0;
-    left: 0;
-    text-shadow: 0px 0px 100px cyan;
-    animation: cycle 10s linear infinite;
+  20% {
+    color: violet;
   }
-  
-  @keyframes cycle {
-    0% {
-      text-shadow: 0px 0px 100px cyan;
-    }
-    20% {
-      text-shadow: 0px 0px 100px violet;
-    }
-    40% {
-      text-shadow: 0px 0px 100px green;
-    }
-    60% {
-      text-shadow: 0px 0px 100px red;
-    }
-    80% {
-      text-shadow: 0px 0px 100px orange;
-    }
+  40% {
+    color: green;
   }
-  
-  @keyframes color-change {
-    0% {
-      color: cyan;
-    }
-    20% {
-      color: violet;
-    }
-    40% {
-      color: green;
-    }
-    60% {
-      color: red;
-    }
-    80% {
-      color: orange;
-    }
-    100% {
-      color: white;
-    }
+  60% {
+    color: red;
   }
-  
-  .nav-bar-search { 
-    margin: 5px;
-    width: 80%; /*adjusts width of the search bar*/
-    background-color: white;
-    padding:5px;
-    grid-area: nav-search; 
+  80% {
+    color: orange;
   }
+  100% {
+    color: white;
+  }
+}
+
+.nav-bar-search {
+  width: 15%; /*adjusts width of the search bar*/
+  background-color: white;
+  padding: 5px;
+  padding-bottom: 15px;
+  padding-inline: 16px;
+  grid-area: nav-search;
+  border: 3px solid transparent;
+  border-radius: 6px;
+}

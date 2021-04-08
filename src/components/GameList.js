@@ -1,11 +1,14 @@
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
-import styles from "../styles/GameList.modules.css"
+import styles from "../styles/GameList.modules.css";
 
 export default function GameList({ match }) {
   console.log(match);
-  const searchName = match.params.game;
+
+  let searchName = "";
+  searchName =
+    match.params.game === "allgames" ? "" : `title=${match.params.game}&sortBy=Release&`;
   const searchUpperPrice = match.params.price;
 
   const [state, dispatch] = useReducer(reducer, {
@@ -37,7 +40,7 @@ export default function GameList({ match }) {
     };
 
     fetch(
-      `https://www.cheapshark.com/api/1.0/deals?title=${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}`,
+      `https://www.cheapshark.com/api/1.0/deals?${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -81,6 +84,19 @@ export default function GameList({ match }) {
       ))}
     </div>
   ) : (
-    <div style={{ margin: "200px" }}>No results found</div>
+    <div
+      style={{
+        margin: "200px",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 48,
+      }}
+    >
+      <div>We're sorry.</div>
+      <div>
+        Your search for {match.params.game} {/*for under ${match.params.price}{" "}*/}
+        returned no results.
+      </div>
+    </div>
   );
 }

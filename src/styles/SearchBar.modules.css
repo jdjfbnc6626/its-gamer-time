@@ -1,0 +1,9 @@
+.search-bar-searchArea> div{
+    border: 0px solid transparent;
+    border-radius: 6px;
+}
+
+.search-bar-slider > div{
+    border: 0px solid transparent;
+    border-radius: 6px;
+}

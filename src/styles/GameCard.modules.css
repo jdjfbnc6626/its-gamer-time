@@ -1,10 +1,16 @@
 .game-card {
   font-size: 1vw;
-
   background: linear-gradient(45deg, yellow, blue);
-
+  height: calc(216px + 4vw);
+  width: calc(460px + 1vw);
   margin: 1vw;
   padding: 1vw;
   overflow: hidden;
 
+}
+
+.game-card-image{
+  height: 216px;
+  width: 460px;
+  object-fit: fill;
 }

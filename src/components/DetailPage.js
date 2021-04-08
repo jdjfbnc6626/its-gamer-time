@@ -1,94 +1,97 @@
-import { useEffect, useReducer } from "react"
-import getStoreList from "./storeList.js"
+import { useEffect, useReducer } from "react";
+import getStoreList from "./storeList.js";
+import styles from "../styles/DetailPage.modules.css";
 
-const storeList = getStoreList()
+const storeList = getStoreList();
 
 const initalState = {
-    imageURL: '',
-    title: '',
-    bestPrice: '',
-    bestPriceStore: '',
-    historicLow: '',
-    isLoading: true,
-}
+  imageURL: "",
+  title: "",
+  regularPrice: "",
+  bestPrice: "",
+  bestPriceStore: "",
+  historicLow: "",
+  isLoading: true,
+};
 
-function reducer(state, action){ //action = {type:, data:, storeList:}
-    switch(action.type){
-        case 'initalFetch':
-            let bestDeal = getLowestPrice(action.data.deals)
-            return {
-                imageURL: action.data.info.thumb, //change later if we want a different picture
-                title:  action.data.info.title,
-                bestPrice: bestDeal.price,
-                bestPriceStore: action.stores[bestDeal.storeID],
-                historicLow: action.data.cheapestPriceEver.price,
-                isLoading: false,
-            }
-        default:
-            return state
-    }
-}
+function reducer(state, action) {
+  //action = {type:, data:, stores:}
+  switch (action.type) {
+    case "initalFetch":
+      let bestDeal = action.data.deals[0] //api already sorts by best deal making 0th the same deal
+      let boxArt
 
-//takes list of deals and outputs an array with lowest price and the store id
-function getLowestPrice(dealList){
-    let lowestPriceKey = undefined
-    Object.keys(dealList).forEach(key => {
-        //checks if the key is the first key to prevent comparing undefined
-        if(lowestPriceKey===undefined){
-            lowestPriceKey = dealList[key]
-            return
+        if(action.data.info.steamAppID === null){
+          boxArt = action.data.info.thumb
+        }else{
+          boxArt = `https://steamcdn-a.akamaihd.net/steam/apps/${action.data.info.steamAppID}/header.jpg`
         }
 
-        if(dealList[key].price<lowestPriceKey.price){
-            lowestPriceKey = dealList[key]
-        }
-        return
-    })
-    return lowestPriceKey
+
+      return {
+        imageURL: boxArt,
+        title: action.data.info.title,
+        regularPrice: bestDeal.retailPrice,
+        bestPrice: action.data.deals[0].price, 
+        bestPriceStore: action.stores[bestDeal.storeID],
+        historicLow: action.data.cheapestPriceEver.price,
+        isLoading: false,
+      };
+    default:
+      return state;
+  }
 }
-
-
 
 
 //Expects input of game id as string, and an input object of key value paired store ID and names
 //Create a fetch request per id with API call, replace 'NUMBER' with ID https://www.cheapshark.com/api/1.0/games?id='NUMBER'
 //returns JSX element
 
-export default function DetailPage({match}){ 
-    const gameID = match.params.id
-    const [state, dispatch] = useReducer(reducer, initalState)
+export default function DetailPage({ match }) {
+  const gameID = match.params.id;
+  const [state, dispatch] = useReducer(reducer, initalState);
 
-    useEffect(()=>{
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-        //fetch request for the passed in gameID
-        fetch(`https://www.cheapshark.com/api/1.0/games?id=${gameID}`, requestOptions) 
-            .then(response => response.json())
-            .then(result => dispatch({type:"initalFetch", data: result, stores: storeList}))
-            .catch(error => console.log('error', error));
-    },[])
-    //if the fetch request is not complete yet, rended a loading screen.
-    if(state.isLoading === true){
-        return (
-            <div className="Detail-View">
-                <div> 'Loading...' </div>
-            </div>
-        )
-    }else{
-        return(
-            //JSX
-            //want to display: box art, title, current best price, best price store, historic low price & date of price
-            <div className="Detail-View">
-                <img className="Detail-View Box-Art" src={state.imageURL} alt={`Box Art of ${state.title}`}/> {/* box art */}
-                <span className="Detail-View Title">{state.title}</span>{/* title */}
-                <span className="Detail-View Best-Price">Best Price:{state.bestPrice}</span>{/* current best price */}
-                <span className="Detail-View Best-Price-Store"> from {state.bestPriceStore}</span>{/* Store with best price */}
-                <span className="DetailView Historic-Low">Historic low: {state.historicLow}</span>{/* Historic Low price with date */}
-            </div>
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    //fetch request for the passed in gameID
+    fetch(
+      `https://www.cheapshark.com/api/1.0/games?id=${gameID}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) =>
+        dispatch({ type: "initalFetch", data: result, stores: storeList })
+      )
+      .catch((error) => console.log("error", error));
+  }, []);
 
-        )
-    }
+
+  //if the fetch request is not complete yet, rended a loading screen.
+  if (state.isLoading === true) {
+    return (
+      <div className="Detail-View">
+        <div> 'Loading...' </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="container">
+        <div className="head">
+          <h1>{state.title}</h1>
+        </div>
+        <div className="gameImage">
+          <img src={state.imageURL} alt={`Box Art of ${state.title}`}/>
+        </div>
+        <div className="staticInfo">
+          <div className="regularPrice"><strong>Regular Price:</strong> ${state.regularPrice}</div>
+          <div className="bestPrice"><strong>Best Price:</strong> ${state.bestPrice}</div>
+          <div className="bestPriceStore"><strong>Available On:</strong> {state.bestPriceStore}</div>
+          <div className="historicLow"><strong>Historic low:</strong> ${state.historicLow}</div>
+        </div>
+      </div>
+    );
+  }
 }
-
