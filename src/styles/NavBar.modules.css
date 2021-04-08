@@ -1,0 +1,30 @@
+.nav-bar {
+    display: grid;
+    grid-template-columns: 0.7fr 1.6fr 0.7fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    height: inherit;
+    align-items:center;
+    grid-template-areas:
+      "logo site-title nav-search";
+    background: linear-gradient(45deg, yellow, blue);
+  }
+  .nav-bar-logo { 
+    grid-area: logo; 
+    object-fit:cover;
+    width: 200px; 
+    height: 5em; /* set to the height of the nav bar */
+  }
+  .nav-bar-title { 
+    grid-area: site-title;
+    text-align: center;
+    font-size: 40px; 
+    font-weight: bold;
+    height:inherit;
+    color: black;
+  }
+  
+  .nav-bar-search { 
+    width: 80%; /*adjusts width of the search bar*/
+    grid-area: nav-search; 
+  }
