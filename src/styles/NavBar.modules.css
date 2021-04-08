@@ -86,6 +86,9 @@
   }
   
   .nav-bar-search { 
+    margin: 5px;
     width: 80%; /*adjusts width of the search bar*/
+    background-color: white;
+    padding:5px;
     grid-area: nav-search; 
   }

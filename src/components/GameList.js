@@ -1,18 +1,19 @@
-
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
 import styles from "../styles/GameList.modules.css"
 
-export default function GameList({match}) {
-
-  const searchInput = match.params.game
+export default function GameList({ match }) {
+  console.log(match);
+  const searchName = match.params.game;
+  const searchUpperPrice = match.params.price;
 
   const [state, dispatch] = useReducer(reducer, {
     gameList: [],
   });
 
-  const {gameList} = state
+  let { gameList } = state;
+  let searchLowerPrice = 0;
 
   function reducer(state, action) {
     const { type, payload } = action;
@@ -25,13 +26,18 @@ export default function GameList({match}) {
   }
 
   useEffect(() => {
+    dispatch({
+      type: "searchByGameName",
+      payload: { gameArray: [] },
+    });
+
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
 
     fetch(
-      `https://www.cheapshark.com/api/1.0/games?title=${searchInput}&limit=20&exact=0`, //limit of 20 results is hard coded here
+      `https://www.cheapshark.com/api/1.0/deals?title=${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -42,20 +48,39 @@ export default function GameList({match}) {
         })
       )
       .catch((error) => console.log("error", error));
-  }, [searchInput]); //loading the fetch once might become an issue as new searches are made? could be avoided by calling a new list each time?
+  }, [searchName, searchUpperPrice, searchLowerPrice]);
 
-  //conditional render if the gameList has not been updated by the fetch request
-  return (gameList.length > 0 ? (
+  function getLowestPrice(arr) {
+    let filteredArray = [];
+    arr.forEach((game) => {
+      let currentGame = game.internalName;
+      let lowerPrice = game.salePrice;
+      if (!filteredArray.includes(game.internalName)) {
+        arr.forEach((nextGame) => {
+          if (
+            currentGame === nextGame.internalName &&
+            Number(nextGame.salePrice) < Number(lowerPrice)
+          )
+            lowerPrice = nextGame.salePrice;
+        });
+        game.salePrice = lowerPrice;
+        filteredArray.push(game.internalName, game);
+      }
+    });
+    return filteredArray.filter((game) => typeof game === "object");
+  }
+
+  return gameList.length > 0 ? (
     <div className="game-list">
-      {gameList.map((game) => (
+      {getLowestPrice(gameList).map((game) => (
         <div key={game.gameID}>
-          <Link to={`/games/${game.gameID}`}>
+          <Link to={`/games/${game.gameID}`} style={{ textDecoration: "none" }}>
             <GameCard game={game} />
           </Link>
         </div>
       ))}
     </div>
   ) : (
-    <div style={{margin: "200px"}}>No results found</div> //consider moving inline to CSS
-  ))
+    <div style={{ margin: "200px" }}>No results found</div>
+  );
 }

@@ -13,7 +13,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5em 1fr;
+  grid-template-rows: 15vh 80%;
   gap: 0px 0px;
   grid-template-areas:
     "header"
@@ -26,7 +26,7 @@ body {
 }
 
 .header{
-  height:5em;
+  height:6em;
   grid-area: header;
 }
 
