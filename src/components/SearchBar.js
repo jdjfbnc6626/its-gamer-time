@@ -1,5 +1,4 @@
 import React from "react";
-import styles from '../styles/SearchBar.modules.css'
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
@@ -66,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   inputRoot: {
-    width: "100%",
     color: "inherit",
   },
   inputInput: {
@@ -76,9 +74,9 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "100%",
+      width: "12ch",
       "&:focus": {
-        width: "100%",
+        width: "20ch",
       },
     },
   },
