@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 });
 
 function valuetext(value) {
-  console.log(value)
+  // console.log(value)
 }
 
 export default function PriceSlider() {

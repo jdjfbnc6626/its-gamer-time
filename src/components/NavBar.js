@@ -9,11 +9,9 @@ function NavBar() {
         <img src="https://i.imgur.com/BvJrGqC.png" alt="logo" />
       </section>
       <section className = "page-title">It's Gamer Time</section>
-      <section>
+      <section style={{backgroundColor: "white", padding: "5px"}}>
         <SearchBar />
-        <span>
         <PriceSlider />
-        </span>
       </section>
     </div>
   );
