@@ -22,7 +22,7 @@ export default function App() {
           <main className="main">
             <Switch>
               <Route exact path="/" render={()=> <div className="main-search"><SearchBar /></div>}/>  {/* div required here to allow for class naming*/}
-              <Route path ="/search/:game" component={GameList} />
+              <Route path="/search/:game/:price" component={GameList} />
               <Route path="/games/:id" component={DetailPage} />
               <Redirect exact from="/games" to="/" />
               <Redirect exact from="/search" to="/"/>
