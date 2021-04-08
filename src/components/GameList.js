@@ -5,13 +5,13 @@ import GameCard from "./GameCard";
 export default function GameList({ match }) {
   console.log(match);
   const searchName = match.params.game;
+  const searchUpperPrice = match.params.price;
 
   const [state, dispatch] = useReducer(reducer, {
     gameList: [],
   });
 
   let { gameList } = state;
-  let searchUpperPrice = 100;
   let searchLowerPrice = 0;
 
   function reducer(state, action) {
@@ -47,7 +47,7 @@ export default function GameList({ match }) {
         })
       )
       .catch((error) => console.log("error", error));
-  }, [searchName, searchUpperPrice, searchLowerPrice]); //loading the fetch once might become an issue as new searches are made? could be avoided by calling a new list each time?
+  }, [searchName, searchUpperPrice, searchLowerPrice]);
 
   function getLowestPrice(arr) {
     let filteredArray = [];
@@ -56,12 +56,11 @@ export default function GameList({ match }) {
       let lowerPrice = game.salePrice;
       if (!filteredArray.includes(game.internalName)) {
         arr.forEach((nextGame) => {
-          if (currentGame === nextGame.internalName) {
-            if (Number(nextGame.salePrice) < Number(lowerPrice)) {
-              lowerPrice = nextGame.salePrice;
-              console.log(currentGame, lowerPrice);
-            }
-          }
+          if (
+            currentGame === nextGame.internalName &&
+            Number(nextGame.salePrice) < Number(lowerPrice)
+          )
+            lowerPrice = nextGame.salePrice;
         });
         game.salePrice = lowerPrice;
         filteredArray.push(game.internalName, game);
@@ -70,18 +69,17 @@ export default function GameList({ match }) {
     return filteredArray.filter((game) => typeof game === "object");
   }
 
-  //conditional render if the gameList has not been updated by the fetch request
   return gameList.length > 0 ? (
     <div className="game-list">
       {getLowestPrice(gameList).map((game) => (
         <div key={game.gameID}>
-          <Link to={`/games/${game.gameID}`}>
+          <Link to={`/games/${game.gameID}`} style={{ textDecoration: "none" }}>
             <GameCard game={game} />
           </Link>
         </div>
       ))}
     </div>
   ) : (
-    <div style={{ margin: "200px" }}>No results found</div> //consider moving inline to CSS
+    <div style={{ margin: "200px" }}>No results found</div>
   );
 }
