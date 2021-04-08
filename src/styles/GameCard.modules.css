@@ -1,0 +1,10 @@
+.game-card {
+  font-size: 1vw;
+
+  background: linear-gradient(45deg, yellow, blue);
+
+  margin: 1vw;
+  padding: 1vw;
+  overflow: hidden;
+
+}
