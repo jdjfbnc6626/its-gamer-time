@@ -3,6 +3,13 @@
   padding: 0;
 }
 
+
+body {
+  height: 100%;
+  margin: 0;
+  background-color: aqua; /*to set the background color*/
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -15,7 +22,7 @@
 
 .main { 
   grid-area: main; 
-  background-color: aqua;
+
 }
 
 .header{
