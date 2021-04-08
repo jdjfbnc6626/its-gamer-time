@@ -85,9 +85,9 @@ export default function DetailPage({match /*, storeList*/}){ //removing storeLis
             <div className="Detail-View">
                 <img className="Detail-View Box-Art" src={state.imageURL} alt={`Box Art of ${state.title}`}/> {/* box art */}
                 <span className="Detail-View Title">{state.title}</span>{/* title */}
-                <span className="Detail-View Best-Price">{state.bestPrice}</span>{/* current best price */}
-                <span className="Detail-View Best-Price-Store">{state.bestPriceStore}</span>{/* Store with best price */}
-                <span className="DetailView Historic-Low">{state.historicLow}</span>{/* Historic Low price with date */}
+                <span className="Detail-View Best-Price">Best Price:{state.bestPrice}</span>{/* current best price */}
+                <span className="Detail-View Best-Price-Store"> from {state.bestPriceStore}</span>{/* Store with best price */}
+                <span className="DetailView Historic-Low">Historic low: {state.historicLow}</span>{/* Historic Low price with date */}
             </div>
 
         )
