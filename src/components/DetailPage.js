@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from "react"
+import getStoreList from "./storeList.js"
 
+const storeList = getStoreList()
 
 const initalState = {
     imageURL: '',
@@ -14,12 +16,11 @@ function reducer(state, action){ //action = {type:, data:, storeList:}
     switch(action.type){
         case 'initalFetch':
             let bestDeal = getLowestPrice(action.data.deals)
-            
             return {
                 imageURL: action.data.info.thumb, //change later if we want a different picture
                 title:  action.data.info.title,
                 bestPrice: bestDeal.price,
-                // bestPriceStore: action.storeList[bestDeal.storeID],
+                bestPriceStore: action.stores[bestDeal.storeID],
                 historicLow: action.data.cheapestPriceEver.price,
                 isLoading: false,
             }
@@ -34,12 +35,12 @@ function getLowestPrice(dealList){
     Object.keys(dealList).forEach(key => {
         //checks if the key is the first key to prevent comparing undefined
         if(lowestPriceKey===undefined){
-            lowestPriceKey = key
+            lowestPriceKey = dealList[key]
             return
         }
 
-        if(key.price<lowestPriceKey.price){
-            lowestPriceKey = key
+        if(dealList[key].price<lowestPriceKey.price){
+            lowestPriceKey = dealList[key]
         }
         return
     })
@@ -53,11 +54,8 @@ function getLowestPrice(dealList){
 //Create a fetch request per id with API call, replace 'NUMBER' with ID https://www.cheapshark.com/api/1.0/games?id='NUMBER'
 //returns JSX element
 
-export default function DetailPage({match /*, storeList*/}){ //removing storeList until proper context is created for it
+export default function DetailPage({match}){ 
     const gameID = match.params.id
-    console.log(gameID)
-    const storeList = {} //REMOVE once storelist is properly initalized
-
     const [state, dispatch] = useReducer(reducer, initalState)
 
     useEffect(()=>{
