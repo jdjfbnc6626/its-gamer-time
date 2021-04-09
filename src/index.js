@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import './fonts/SpaceMission-rgyw9.ttf';
-
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: 'paladins';
+  src: url(./fonts/paladins.ttf);
+}
+/* @font-face {
+  font-family: 'paladinsregular';
+  src: url(./fonts/paladins-webfont.woff2) format('woff2'),
+       url(./fonts/paladins-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+} */

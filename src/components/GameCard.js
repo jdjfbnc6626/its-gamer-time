@@ -10,10 +10,7 @@ export default function GameCard({ game }) {
 
   return (
     <div className="game-card">
-      <img className="game-card-image"
-        src={image}
-        alt={title}
-      />
+      <img className="game-card-image" src={image} alt={title} />
       <h3>{title}</h3>
       <p>Sale Price: ${salePrice}</p>
     </div>

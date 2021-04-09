@@ -10,9 +10,10 @@ export default function GameList({ match }) {
 
   const [state, dispatch] = useReducer(reducer, {
     gameList: ["sadness"],
+    sortBy: "Price",
   });
 
-  let { gameList } = state;
+  let { gameList, sortBy } = state;
   let searchLowerPrice = 0;
 
   function reducer(state, action) {
@@ -20,6 +21,8 @@ export default function GameList({ match }) {
     switch (type) {
       case "searchByGameName":
         return { ...state, gameList: payload.gameArray };
+      case "updateSortCrieria":
+        return { ...state, sortBy: payload.sortCriteria };
       default:
         return state;
     }
@@ -37,7 +40,7 @@ export default function GameList({ match }) {
     };
 
     fetch(
-      `https://www.cheapshark.com/api/1.0/deals?${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}`,
+      `https://www.cheapshark.com/api/1.0/deals?${searchName}&exact=0&upperPrice=${searchUpperPrice}&lowerPrice=${searchLowerPrice}&sortBy=${sortBy}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -48,7 +51,7 @@ export default function GameList({ match }) {
         })
       )
       .catch((error) => console.log("error", error));
-  }, [searchName, searchUpperPrice, searchLowerPrice]);
+  }, [searchName, searchUpperPrice, searchLowerPrice, sortBy]);
 
   function getLowestPrice(arr) {
     let filteredArray = [];
@@ -73,14 +76,51 @@ export default function GameList({ match }) {
   return gameList[0] === "sadness" ? (
     <div className="results-text">Loading Results...</div>
   ) : gameList.length > 0 ? (
-    <div className="game-list">
-      {getLowestPrice(gameList).map((game) => (
-        <div key={game.gameID}>
-          <Link to={`/games/${game.gameID}`} style={{ textDecoration: "none" }}>
-            <GameCard game={game} />
-          </Link>
-        </div>
-      ))}
+    <div>
+      <div className="button-group">
+        <button className="sort-button"
+          onClick={() =>
+            dispatch({
+              type: "updateSortCrieria",
+              payload: { sortCriteria: "Price" },
+            })
+          }
+        >
+          Price
+        </button>
+        <button className="sort-button"
+          onClick={() =>
+            (sortBy = dispatch({
+              type: "updateSortCrieria",
+              payload: { sortCriteria: "Release" },
+            }))
+          }
+        >
+          Realease Date
+        </button>
+        <button className="sort-button"
+          onClick={() =>
+            (sortBy = dispatch({
+              type: "updateSortCrieria",
+              payload: { sortCriteria: "Metacritic" },
+            }))
+          }
+        >
+          Rating
+        </button>
+      </div>
+      <div className="game-list">
+        {getLowestPrice(gameList).map((game) => (
+          <div key={game.gameID}>
+            <Link
+              to={`/games/${game.gameID}`}
+              style={{ textDecoration: "none" }}
+            >
+              <GameCard game={game} />
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   ) : (
     <div className="results-text">

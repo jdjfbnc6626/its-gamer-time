@@ -18,6 +18,7 @@
 }
 
 .emboss-txt {
+  font-family: 'paladins';
   font-weight: bold;
   position: relative;
   font-size: 12vh;

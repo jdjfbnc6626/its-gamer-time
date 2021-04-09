@@ -6,11 +6,15 @@
   margin: 1vw;
   padding: 1vw;
   overflow: hidden;
-
+  border-radius: 10px;
+  
 }
 
 .game-card-image{
   height: 216px;
   width: 460px;
   object-fit: fill;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
