@@ -5,7 +5,7 @@ import "../styles/DetailPage.modules.css";
 const storeList = getStoreList();
 
 function reducer(state, action) {
-  const { data, type, stores } = action;
+  const { data, type} = action;
   const { deals, info, cheapestPriceEver } = data;
   //action = {type:, data:, stores:}
   switch (type) {
@@ -21,7 +21,7 @@ function reducer(state, action) {
         title: info.title,
         regularPrice: bestDeal.retailPrice,
         bestPrice: deals[0].price,
-        bestPriceStore: stores[bestDeal.storeID],
+        bestPriceStore: storeList[bestDeal.storeID],
         historicLow: cheapestPriceEver.price,
       };
     default:
@@ -52,7 +52,7 @@ export default function DetailPage({ match }) {
     )
       .then((response) => response.json())
       .then((result) =>
-        dispatch({ type: "initalFetch", data: result, stores: storeList })
+        dispatch({ type: "initalFetch", data: result})
       )
       .catch((error) => console.log("error", error));
   }, [gameID]);
