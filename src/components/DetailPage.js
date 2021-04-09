@@ -23,7 +23,6 @@ function reducer(state, action) {
         bestPrice: deals[0].price,
         bestPriceStore: stores[bestDeal.storeID],
         historicLow: cheapestPriceEver.price,
-        isLoading: false,
       };
     default:
       return state;
@@ -39,7 +38,6 @@ export default function DetailPage({ match }) {
     bestPrice: "",
     bestPriceStore: "",
     historicLow: "",
-    isLoading: true,
   });
 
   useEffect(() => {
@@ -60,10 +58,10 @@ export default function DetailPage({ match }) {
   }, [gameID]);
 
   //if the fetch request is not complete yet, rended a loading screen.
-  const {title, imageURL, regularPrice, bestPrice, bestPriceStore, historicLow, isLoading} = state;
+  const {title, imageURL, regularPrice, bestPrice, bestPriceStore, historicLow} = state;
 
-  return isLoading === true ? (
-    <div className="Detail-View"> 'Loading...' </div>
+  return title === "" ? (
+    <div className="results-text"> Loading Game Page... </div>
   ) : (
     <div className="container">
       <div className="head">
