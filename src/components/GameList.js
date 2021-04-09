@@ -1,18 +1,15 @@
 import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
-import styles from "../styles/GameList.modules.css";
+import "../styles/GameList.modules.css";
 
 export default function GameList({ match }) {
-  console.log(match);
-
-  let searchName = "";
-  searchName =
-    match.params.game === "allgames" ? "" : `title=${match.params.game}&sortBy=Release&`;
+  let searchName =
+    match.params.game === "allgames" ? "" : `title=${match.params.game}&`;
   const searchUpperPrice = match.params.price;
 
   const [state, dispatch] = useReducer(reducer, {
-    gameList: [],
+    gameList: ["sadness"],
   });
 
   let { gameList } = state;
@@ -31,7 +28,7 @@ export default function GameList({ match }) {
   useEffect(() => {
     dispatch({
       type: "searchByGameName",
-      payload: { gameArray: [] },
+      payload: { gameArray: ["sadness"] },
     });
 
     var requestOptions = {
@@ -73,7 +70,9 @@ export default function GameList({ match }) {
     return filteredArray.filter((game) => typeof game === "object");
   }
 
-  return gameList.length > 0 ? (
+  return gameList[0] === "sadness" ? (
+    <div className="results-text">Loading Results...</div>
+  ) : gameList.length > 0 ? (
     <div className="game-list">
       {getLowestPrice(gameList).map((game) => (
         <div key={game.gameID}>
@@ -84,18 +83,15 @@ export default function GameList({ match }) {
       ))}
     </div>
   ) : (
-    <div
-      style={{
-        margin: "200px",
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 48,
-      }}
-    >
-      <div>We're sorry.</div>
+    <div className="results-text">
       <div>
-        Your search for {match.params.game} {/*for under ${match.params.price}{" "}*/}
-        returned no results.
+        <div>We're sorry.</div>
+        <div>
+          Your search for{" "}
+          <span style={{ color: "red" }}>{match.params.game}</span> for under{" "}
+          <span style={{ color: "green" }}>${match.params.price}</span> returned
+          no results.
+        </div>
       </div>
     </div>
   );

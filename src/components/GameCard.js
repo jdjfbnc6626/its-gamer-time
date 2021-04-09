@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/GameCard.modules.css";
+import "../styles/GameCard.modules.css";
 
 export default function GameCard({ game }) {
   const { title, steamAppID, salePrice, thumb } = game;

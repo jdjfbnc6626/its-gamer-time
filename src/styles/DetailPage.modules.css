@@ -1,5 +1,4 @@
 .container{
- 
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 0.5fr 2fr;
@@ -48,5 +47,4 @@
   flex-direction: column;
   justify-content: space-evenly;
   text-align: left;
-  
 }

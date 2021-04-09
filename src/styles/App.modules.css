@@ -7,7 +7,6 @@
   text-align: center;
 }
 
-
 body {
   height: 100%;
   margin: 0;
@@ -23,6 +22,7 @@ body {
     "header"
     "main";
 }
+
 .header{
   height:6em;
   grid-area: header;
@@ -31,71 +31,3 @@ body {
 .main { 
   grid-area: main; 
 }
-
-.main-search {
-  padding-inline: 25%;
-  width: 50vw;
-  margin-top: 100px
-}
-
-.main-search > div .MuiInputBase-root {
-  /* border: 2px solid gray; */
-  border: 3px solid transparent;
-  border-radius: 6px;
-}
-
-.main-search .search-bar-container {
-  background-color: white;
-  padding: 20px;
-  border: 3px solid transparent;
-  border-radius: 6px;
-}
-
-.emboss-txt {
-  font-weight: bold;
-  position: relative;
-  font-size: 12vh;
-  color: rgb(207, 207, 207);
-  text-shadow: 
-  /*3D layers*/ 0px 0px 1px rgb(167, 167, 167),
-    0px 1px 1px rgb(167, 167, 167), 0px 2px 1px rgb(167, 167, 167),
-    1px 1px 1px rgb(167, 167, 167), 1px 2px 1px rgb(167, 167, 167),
-    1px 3px 1px rgb(167, 167, 167), 2px 2px 1px rgb(167, 167, 167),
-    2px 3px 1px rgb(167, 167, 167), 2px 4px 1px rgb(167, 167, 167),
-    /*long soft bottom*/ 1px 10px 30px rgba(0, 0, 0, 0.8),
-    1px 10px 70px rgba(0, 0, 0, 0.8),
-    /*short soft bottom*/ 0px 5px 5px rgba(0, 0, 0, 0.8),
-    /*left shadow*/ -5px 5px 20px rgba(0, 0, 0, 0.8),
-    /*right shadow*/ 5px 5px 20px rgba(0, 0, 0, 0.8),
-    /*white light*/ 1px 1px 120px rgba(255, 255, 255, 0.5);
-  animation: main-cycle 10s linear infinite;
-  /* //animation: main-color-change 10s infinite; */
-}
-
-
-@keyframes main-cycle {
-  0% {
-    text-shadow: 0px 0px 100px rgba(11, 124, 199);
-    color: cyan;
-  }
-  20% {
-    text-shadow: 0px 0px 100px rgba(168, 11, 199);
-    color: violet;
-  }
-  40% {
-    text-shadow: 0px 0px 100px rgba(11, 199, 96);
-    color: green;
-  }
-  60% {
-    text-shadow: 0px 0px 100px rgba(199, 11, 11);
-    color: red;
-  }
-  80% {
-    text-shadow: 0px 0px 100px rgba(199, 96, 11);
-    color: orange;
-  }
-  100% {
-    color: white;
-  }
-}
-
